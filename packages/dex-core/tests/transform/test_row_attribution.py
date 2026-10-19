@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -538,7 +539,7 @@ def test_rendering_resolves_static_var_calls_and_defaults(
 def test_rendering_refuses_unresolvable_or_non_scalar_var_calls(
     model_sql, vars_map, expected_reason
 ):
-    with pytest.raises(UnattributableError, match=expected_reason):
+    with pytest.raises(UnattributableError, match=re.escape(expected_reason)):
         render_model_sql(model_sql, naming_resolver, vars_map)
 
 
